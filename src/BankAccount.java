@@ -17,7 +17,7 @@ public class BankAccount {
 
     public double withdrawal(double amount){
         if(amount > balance) {
-            System.out.println("CANNOT Withdraw, Balance is low.");
+            System.out.println("\nCANNOT Withdraw, Balance is 'LOW'.");
             return balance;
         }
 
