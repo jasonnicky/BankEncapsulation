@@ -1,16 +1,18 @@
 public class BankAccount {
-    private String accountName;
+    private int accountNumber;
     private double balance;
     private String accountHolderName;
 
     // getter methods
-    public String getAccountName(){ return accountName;}
+    public int getAccountNumber(){ return accountNumber;}
     public double getBalance(){ return balance;}
     public String getAccountHolderName(){ return accountHolderName;}
 
     // setter methods
-    public void setAccountName(String accountName){ this.accountName = accountName;}
-    public void setBalance(double balance){ this.balance = balance;}
+    public void setAccountNumber(int accountNumber){ this.accountNumber = accountNumber;}
+
+    // protected, so that only classes which are extended can modify setBalance() method
+    protected void setBalance(double balance){ this.balance = balance;}
     public void setAccountHolderName(String accountHolderName){ this.accountHolderName = accountHolderName;}
 
     public double deposit(double amount){ balance += amount; return balance;}

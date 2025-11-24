@@ -1,8 +1,6 @@
 public class CurrentAccount extends BankAccount{
-
     @Override
     public double deposit(double amount){
-
         System.out.printf("\n₹ %.2f is being Deposited to Current Account.",amount);
         setBalance(getBalance() + amount);
         System.out.print("\nCurrent Balance after depositing: ₹ "+getBalance());
