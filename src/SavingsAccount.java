@@ -13,9 +13,19 @@ public class SavingsAccount extends BankAccount {
 
     @Override
     public double withdrawal(double amount){
-        if(amount > getBalance()){
-            System.out.print("\nSavings are low, CANNOT Withdraw Money from Savings Account. \nCurrent Balance: ₹ "+getBalance());
-            return getBalance();
+
+        if((getBalance() - minBalance )> amount){
+            System.out.printf("\nTransaction failed.\nNote: Minimum Balance: ₹ %.2f \nAvailable Balance: ₹ %.2f",minBalance,getBalance());
+        }else{
+            if(withdrawalLimit >= dailyWithdrawalCount){
+                System.out.printf("\nMaximum Withdrawal Limit ");
+            }else{
+                if(amount > getBalance()){
+                    System.out.print("\nSavings are low, CANNOT Withdraw Money from Savings Account. \nCurrent Balance: ₹ "+getBalance());
+                    return getBalance();
+                }
+                dailyWithdrawalCount++;
+            }
         }
 
         System.out.printf("\n₹ %.2f is being Withdrawn from Savings Account.",amount);

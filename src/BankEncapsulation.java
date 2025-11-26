@@ -4,8 +4,7 @@ public class BankEncapsulation {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // SavingsAccount details
-        SavingsAccount sa = new SavingsAccount();
+
 
         System.out.println("Hello, Welcome to SBI Bank!");
         System.out.print("\nPlease Enter your bank details in the portal:");
@@ -18,11 +17,13 @@ public class BankEncapsulation {
                     "\n 3. To exit the program."
             );
             System.out.print("Enter a number and I will treat it as an option to perform bank transactions: ");
-
             option = sc.nextInt();
 
             switch (option){
                 case 1:
+
+                    // SavingsAccount details
+                    SavingsAccount sa = new SavingsAccount();
                     System.out.println("\nSavings Account: ");
                     /*sa.setAccountName("Rob-B01");*/
 
