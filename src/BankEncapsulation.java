@@ -4,92 +4,93 @@ public class BankEncapsulation {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-
+        // Create account objects once, outside the loop
+        SavingsAccount savingsAccount = new SavingsAccount();
+        CurrentAccount currentAccount = new CurrentAccount();
 
         System.out.println("Hello, Welcome to SBI Bank!");
-        System.out.print("\nPlease Enter your bank details in the portal:");
 
+        // Setup Savings Account
+        System.out.print("\nPlease set up your Savings Account.");
+        System.out.print("\nEnter Account Number: ");
+        savingsAccount.setAccountNumber(sc.nextInt());
+        sc.nextLine(); // Consume newline
+        System.out.print("Enter Account Holder Name: ");
+        savingsAccount.setAccountHolderName(sc.nextLine());
+
+        // Setup Current Account
+        System.out.print("\nPlease set up your Current Account.");
+        System.out.print("\nEnter Account Number: ");
+        currentAccount.setAccountNumber(sc.nextInt());
+        sc.nextLine(); // Consume newline
+        System.out.print("Enter Account Holder Name: ");
+        currentAccount.setAccountHolderName(sc.nextLine());
+
+        BankAccount selectedAccount = null;
         int option;
+
         do {
-            System.out.println("\nOptions" +
-                    "\n 1. To check Savings Account: " +
-                    "\n 2. To check Current Account: " +
-                    "\n 3. To exit the program."
-            );
-            System.out.print("Enter a number and I will treat it as an option to perform bank transactions: ");
+            System.out.println("\n--- Main Menu ---");
+            System.out.println("1. Select Savings Account");
+            System.out.println("2. Select Current Account");
+            System.out.println("3. Exit");
+            System.out.print("Choose an option: ");
             option = sc.nextInt();
 
-            switch (option){
+            switch (option) {
                 case 1:
-
-                    // SavingsAccount details
-                    SavingsAccount sa = new SavingsAccount();
-                    System.out.println("\nSavings Account: ");
-                    /*sa.setAccountName("Rob-B01");*/
-
-                    System.out.print("\nPlease Enter AccountNumber in the portal:");
-                    int sa_AccountNumber = sc.nextInt();
-                    sa.setAccountNumber(sa_AccountNumber);
-
-                    sc.nextLine();
-
-                    /*sa.setAccountHolderName("Robert");*/
-                    System.out.print("\nPlease Enter AccountHolderName in the portal:");
-                    String sa_AccountHolderName = sc.nextLine();
-                    sa.setAccountHolderName(sa_AccountHolderName);
-
-                    /*sa.deposit(15000.00);
-                    sa.withdrawal(5000.00);*/
-                    System.out.print("Enter the amount you want to deposit initially into your Savings Account: ");
-                    double sa_deposit = sc.nextDouble();
-                    sa.deposit(sa_deposit);
-
-                    System.out.println();
-                    System.out.print("\nEnter the amount you want to withdraw from your Savings Account: ");
-                    double sa_withdrawal = sc.nextDouble();
-                    sa.withdrawal(sa_withdrawal);
-
-                    System.out.printf("\nFinal Balance in Savings Account: ₹ " + sa.getBalance());
-
+                    selectedAccount = savingsAccount;
+                    System.out.println("\nSavings Account selected.");
                     break;
-
                 case 2:
-                    // CurrentAccount details
-                    CurrentAccount ca = new CurrentAccount();
-                    System.out.println();
-                    System.out.print("\nCurrent Account:");
-
-                    /*ca.setAccountName("Bob-B02");*/
-
-                    System.out.print("\nPlease Enter AccountNumber in the portal:");
-                    int ca_AccountNumber = sc.nextInt();
-                    ca.setAccountNumber(ca_AccountNumber);
-
-                    sc.nextLine();
-                    /*ca.setAccountHolderName("Bobby");*/
-                    System.out.print("\nPlease Enter AccountHolderName in the portal:");
-                    String ca_AccountHolderName = sc.nextLine();
-                    ca.setAccountHolderName(ca_AccountHolderName);
-                    /*ca.deposit(25000.00);
-                    ca.withdrawal(5000.00);*/
-
-                    System.out.println();
-                    System.out.print("\nEnter the amount you want to deposit initially into your Current Account: ");
-                    double ca_deposit = sc.nextDouble();
-                    ca.deposit(ca_deposit);
-
-                    System.out.println();
-                    System.out.print("\nEnter the amount you want to withdraw from your Current Account: ");
-                    double ca_withdrawal = sc.nextDouble();
-                    ca.withdrawal(ca_withdrawal);
-
-                    System.out.println("\nFinal Balance in Current Account: ₹ " + ca.getBalance());
+                    selectedAccount = currentAccount;
+                    System.out.println("\nCurrent Account selected.");
                     break;
-
                 case 3:
-                    System.out.println("Thank you for using SBI Bank, please visit again!");
+                    System.out.println("\nThank you for using SBI Bank, please visit again!");
+                    continue; // Skip to next loop iteration to exit
+                default:
+                    System.out.println("\nInvalid option. Please try again.");
+                    selectedAccount = null;
                     break;
             }
-        }while(option != 3);
+
+            if (selectedAccount != null) {
+                int transactionChoice;
+                do {
+                    System.out.println("\n--- Account Menu ---");
+                    System.out.println("1. Deposit");
+                    System.out.println("2. Withdraw");
+                    System.out.println("3. Check Balance");
+                    System.out.println("4. Back to Main Menu");
+                    System.out.print("Choose an action: ");
+                    transactionChoice = sc.nextInt();
+
+                    switch (transactionChoice) {
+                        case 1:
+                            System.out.print("Enter amount to deposit: ");
+                            double depositAmount = sc.nextDouble();
+                            selectedAccount.deposit(depositAmount);
+                            break;
+                        case 2:
+                            System.out.print("Enter amount to withdraw: ");
+                            double withdrawalAmount = sc.nextDouble();
+                            selectedAccount.withdrawal(withdrawalAmount);
+                            break;
+                        case 3:
+                            System.out.printf("\nCurrent Balance: ₹ %.2f", selectedAccount.getBalance());
+                            break;
+                        case 4:
+                            System.out.println("\nReturning to Main Menu...");
+                            break;
+                        default:
+                            System.out.println("\nInvalid action. Please try again.");
+                            break;
+                    }
+                } while (transactionChoice != 4);
+            }
+        } while (option != 3);
+
+        sc.close();
     }
 }
